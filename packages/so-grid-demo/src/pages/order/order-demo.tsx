@@ -90,14 +90,14 @@ export default function OrderDemo() {
                     paginationPageSizeOptions={[10, 20, 50, 100]}
                     PaginationComponent={CustomPagination}
                     suppressScrollOnNewData={true}
-                    sortable={true}
+                    sortable={false}
                     multiSort={true}
                     filterable={true}
                     rowHeight={44}
                     headerHeight={48}
                     onGridReady={handleGridReady}
                     onSelectionChanged={(rows) => setSelectedCount(rows.length)}
-                    defaultColDef={{ resizable: true, sortable: true }}
+                    defaultColDef={{ resizable: true }}
                 />
             </div>
 

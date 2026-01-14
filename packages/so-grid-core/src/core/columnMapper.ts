@@ -16,6 +16,7 @@ function mapSingleColumn<TData>(
   defaultColDef?: Partial<SOColumnDef<TData>>
 ): ColumnDef<TData, unknown> {
   const mergedCol = { ...defaultColDef, ...soCol };
+
   const colId = mergedCol.colId || String(mergedCol.field) || '';
 
   // 그룹 컬럼 처리
@@ -38,7 +39,7 @@ function mapSingleColumn<TData>(
           colDef: mergedCol,
         });
       },
-      enableSorting: mergedCol.sortable !== false,
+      enableSorting: mergedCol.sortable === true,
       enableColumnFilter: mergedCol.filterable !== false,
       enableResizing: mergedCol.resizable !== false,
       enableHiding: !mergedCol.lockVisible,
@@ -64,7 +65,7 @@ function mapSingleColumn<TData>(
       id: colId,
       header: mergedCol.headerName || String(mergedCol.field) || colId,
       accessorKey: mergedCol.field as string,
-      enableSorting: mergedCol.sortable !== false,
+      enableSorting: mergedCol.sortable === true,
       enableColumnFilter: mergedCol.filterable !== false,
       enableResizing: mergedCol.resizable !== false,
       enableHiding: !mergedCol.lockVisible,
@@ -89,7 +90,7 @@ function mapSingleColumn<TData>(
   return {
     id: colId,
     header: mergedCol.headerName || colId,
-    enableSorting: mergedCol.sortable !== false,
+    enableSorting: mergedCol.sortable === true,
     enableColumnFilter: mergedCol.filterable !== false,
     enableResizing: mergedCol.resizable !== false,
     enableHiding: !mergedCol.lockVisible,

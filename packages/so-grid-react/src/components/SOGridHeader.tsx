@@ -49,15 +49,16 @@ function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
   };
 
   const getSortIcon = () => {
-    if (!sorted) return null;
-    return sorted === 'asc' ? ' ▲' : ' ▼';
+    if (sorted === 'asc') return ' ▲';
+    if (sorted === 'desc') return ' ▼';
+    if (canSort) return ' ⇅'; // 정렬 가능하지만 아직 정렬되지 않은 상태
+    return null;
   };
 
   return (
     <th
-      className={`so-grid__header-cell ${
-        isPinned ? `so-grid__header-cell--pinned-${isPinned}` : ''
-      } ${meta?.headerClass || ''}`}
+      className={`so-grid__header-cell ${isPinned ? `so-grid__header-cell--pinned-${isPinned}` : ''
+        } ${meta?.headerClass || ''}`}
       style={{
         width: header.getSize(),
         minWidth: header.column.columnDef.minSize,
@@ -70,9 +71,8 @@ function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
     >
       {header.isPlaceholder ? null : (
         <div
-          className={`so-grid__header-cell-content ${
-            canSort ? 'so-grid__header-cell-content--sortable' : ''
-          }`}
+          className={`so-grid__header-cell-content ${canSort ? 'so-grid__header-cell-content--sortable' : ''
+            }`}
           onClick={handleClick}
         >
           {meta?.headerRenderer ? (
@@ -88,9 +88,8 @@ function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
       )}
       {canResize && (
         <div
-          className={`so-grid__resizer ${
-            header.column.getIsResizing() ? 'so-grid__resizer--resizing' : ''
-          }`}
+          className={`so-grid__resizer ${header.column.getIsResizing() ? 'so-grid__resizer--resizing' : ''
+            }`}
           onMouseDown={header.getResizeHandler()}
           onTouchStart={header.getResizeHandler()}
         />

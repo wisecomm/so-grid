@@ -80,9 +80,9 @@ export function useColumnDefs(): SOColumnDef<Person>[] {
     return useMemo(
         () => [
             { field: 'id', headerName: 'ID', width: 80, pinned: 'left' },
-            { field: 'name', headerName: 'Name', width: 150 },
+            { field: 'name', headerName: 'Name', width: 150, sortable: true },
             { field: 'email', headerName: 'Email', width: 220 },
-            { field: 'age', headerName: 'Age', width: 80 },
+            { field: 'age', headerName: 'Age', width: 80, sortable: true },
             { field: 'department', headerName: 'Department', width: 140 },
             {
                 field: 'salary',

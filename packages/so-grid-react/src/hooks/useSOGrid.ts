@@ -66,10 +66,15 @@ export function useSOGrid<TData>(
  * TanStack React Table을 직접 사용하는 훅
  */
 export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
-  // console.log('useSOGridTable options:', options);
+  // 그리드 레벨 sortable 옵션을 defaultColDef에 기본값으로 병합
+  const effectiveDefaultColDef = useMemo(() => ({
+    sortable: options.sortable, // 그리드 옵션을 기본값으로 사용
+    ...options.defaultColDef,   // 사용자의 defaultColDef가 우선
+  }), [options.sortable, options.defaultColDef]);
+
   const columns = useMemo(
-    () => mapColumnDefs(options.columnDefs, options.defaultColDef),
-    [options.columnDefs, options.defaultColDef]
+    () => mapColumnDefs(options.columnDefs, effectiveDefaultColDef),
+    [options.columnDefs, effectiveDefaultColDef]
   );
 
   const isServerSide = options.serverSide === true;
@@ -86,6 +91,9 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     pageSize,
   });
 
+  // Controlled sorting state
+  const [sorting, setSorting] = useState<any[]>([]);
+
   // Table ref to avoid circular dependency in options
   const tableRef = useRef<Table<TData>>();
 
@@ -94,13 +102,14 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     data: options.rowData,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // 서버 사이드 모드에서는 클라이언트 정렬/필터링/페이지네이션 비활성화
-    getSortedRowModel: !isServerSide && options.sortable !== false ? getSortedRowModel() : undefined,
+    // 정렬 모델은 항상 활성화하고, 컬럼 레벨에서 제어
+    getSortedRowModel: !isServerSide ? getSortedRowModel() : undefined,
     getFilteredRowModel: !isServerSide && options.filterable !== false ? getFilteredRowModel() : undefined,
     getPaginationRowModel: options.pagination ? getPaginationRowModel() : undefined,
     enableRowSelection: options.rowSelection !== false,
     enableMultiRowSelection: options.rowSelection === 'multiple',
-    enableSorting: options.sortable !== false,
+    // 그리드 레벨 기본값 (컬럼 레벨에서 오버라이드 가능)
+    enableSorting: true, // 항상 true로 두고 컬럼 레벨에서 제어
     enableMultiSort: options.multiSort !== false,
     enableColumnPinning: true,
     enableColumnResizing: true,
@@ -112,6 +121,7 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     autoResetPageIndex: false,
     state: {
       pagination,
+      sorting,
     },
     // Pagination change handler
     onPaginationChange: (updater: any) => {
@@ -131,14 +141,13 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
       }
     },
 
-    onSortingChange: isServerSide ? (updater: any) => {
-      const table = tableRef.current;
-      if (!table) return;
-
-      const oldState = table.getState().sorting;
+    onSortingChange: (updater: any) => {
+      const oldState = sorting;
       const newState = typeof updater === 'function' ? updater(oldState) : updater;
 
-      if (options.onSortChange) {
+      setSorting(newState);
+
+      if (isServerSide && options.onSortChange) {
         options.onSortChange(
           newState.map((s: any) => ({
             colId: s.id,
@@ -146,7 +155,7 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
           }))
         );
       }
-    } : undefined,
+    },
   }), [
     options.rowData,
     columns,
@@ -156,8 +165,8 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     options.rowSelection,
     options.multiSort,
     pageCount,
-    pagination, // Dependency on local state
-    // options.onPaginationChange/onSortChange are omitted for stability, standard practice when they might be inline functions
+    pagination,
+    sorting, // Sorting state dependency
   ]);
 
   const table = useReactTable(tableOptions);
