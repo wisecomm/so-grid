@@ -62,7 +62,8 @@ export function DataTableToolbar({
                             value={custNm}
                             onChange={(event) => setCustNm(event.target.value)}
                             onKeyDown={handleKeyDown}
-                            className="w-[150px] lg:w-[200px]"
+                            className="w-[100px]"
+                            style={{ minWidth: 0 }}
                         />
                     </div>
                     <div className="flex items-center gap-2">
