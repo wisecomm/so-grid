@@ -29,6 +29,10 @@ export interface SOGridOptions<TData> {
   pagination?: boolean;
   paginationPageSize?: number;
   paginationPageSizeOptions?: number[];
+  /** 페이지 변경 시 스크롤 위치 유지 (AG-Grid: suppressScrollOnNewData) */
+  suppressScrollOnNewData?: boolean;
+  /** 컨테이너 높이에 맞춰 페이지 크기 자동 계산 (AG-Grid: paginationAutoPageSize) */
+  paginationAutoPageSize?: boolean;
 
   // 서버 사이드 모드
   serverSide?: boolean;

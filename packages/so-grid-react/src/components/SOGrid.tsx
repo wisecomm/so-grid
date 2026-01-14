@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useEffect, forwardRef, useImperativeHandle, useState, useLayoutEffect } from 'react';
 import { useSOGridTable } from '../hooks/useSOGrid';
 import { SOGridHeader } from './SOGridHeader';
 import { SOGridBody } from './SOGridBody';
@@ -8,6 +8,8 @@ import type { SOGridOptions, SOGridApi } from 'so-grid-core';
 export interface SOGridProps<TData> extends SOGridOptions<TData> {
   className?: string;
   style?: React.CSSProperties;
+  /** Custom Pagination Component */
+  PaginationComponent?: React.ComponentType<any>;
 }
 
 export interface SOGridRef<TData> {
@@ -32,12 +34,83 @@ function SOGridInner<TData>(
     onRowDoubleClicked,
     onCellClicked,
     onGridReady,
+    PaginationComponent,
+    suppressScrollOnNewData,
+    paginationAutoPageSize,
     ...options
   } = props;
 
-  const table = useSOGridTable({ ...options, serverSide, totalRows, pagination });
+  // Auto page size calculation
+  const [autoPageSize, setAutoPageSize] = useState<number | undefined>(undefined);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Calculate page size based on container height
+  useLayoutEffect(() => {
+    if (!paginationAutoPageSize || !wrapperRef.current) return;
+
+    const calculatePageSize = () => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+
+      const wrapperHeight = wrapper.clientHeight;
+      const availableHeight = wrapperHeight - headerHeight;
+      const calculatedPageSize = Math.max(1, Math.floor(availableHeight / rowHeight));
+
+      setAutoPageSize(calculatedPageSize);
+    };
+
+    calculatePageSize();
+
+    // ResizeObserver for dynamic resizing
+    const resizeObserver = new ResizeObserver(calculatePageSize);
+    resizeObserver.observe(wrapperRef.current);
+
+    return () => resizeObserver.disconnect();
+  }, [paginationAutoPageSize, headerHeight, rowHeight]);
+
+  // Effective page size (auto or manual)
+  const effectivePageSize = paginationAutoPageSize && autoPageSize
+    ? autoPageSize
+    : options.paginationPageSize;
+
+  const table = useSOGridTable({
+    ...options,
+    serverSide,
+    totalRows,
+    pagination,
+    paginationPageSize: effectivePageSize,
+  });
+
   const containerRef = useRef<HTMLDivElement>(null);
   const apiRef = useRef<SOGridApi<TData> | null>(null);
+  const scrollPositionRef = useRef<number>(0);
+  const prevPageIndexRef = useRef<number>(0);
+
+  // suppressScrollOnNewData: 페이지 변경 시 스크롤 위치 유지
+  useEffect(() => {
+    if (!suppressScrollOnNewData || !wrapperRef.current) return;
+
+    const currentPageIndex = table.getState().pagination.pageIndex;
+
+    if (prevPageIndexRef.current !== currentPageIndex) {
+      // 페이지가 변경되면 스크롤 위치 복원
+      wrapperRef.current.scrollTop = scrollPositionRef.current;
+      prevPageIndexRef.current = currentPageIndex;
+    }
+  }, [table.getState().pagination.pageIndex, suppressScrollOnNewData]);
+
+  // 스크롤 이벤트 핸들러 (스크롤 위치 저장)
+  useEffect(() => {
+    if (!suppressScrollOnNewData || !wrapperRef.current) return;
+
+    const wrapper = wrapperRef.current;
+    const handleScroll = () => {
+      scrollPositionRef.current = wrapper.scrollTop;
+    };
+
+    wrapper.addEventListener('scroll', handleScroll);
+    return () => wrapper.removeEventListener('scroll', handleScroll);
+  }, [suppressScrollOnNewData]);
 
   // API 생성
   useEffect(() => {
@@ -153,7 +226,7 @@ function SOGridInner<TData>(
       className={`so-grid ${themeClass} ${className || ''}`}
       style={style}
     >
-      <div className="so-grid__wrapper">
+      <div className="so-grid__wrapper" ref={wrapperRef} style={{ overflow: 'auto', flex: paginationAutoPageSize ? 1 : undefined }}>
         <table className="so-grid__table">
           <SOGridHeader
             table={table}
@@ -170,13 +243,23 @@ function SOGridInner<TData>(
         </table>
       </div>
       {pagination && (
-        <SOGridPagination
-          table={table}
-          pageSizeOptions={options.paginationPageSizeOptions}
-          serverSide={serverSide}
-          totalRows={totalRows}
-          loading={loading}
-        />
+        PaginationComponent ? (
+          <PaginationComponent
+            table={table}
+            pageSizeOptions={options.paginationPageSizeOptions}
+            serverSide={serverSide}
+            totalRows={totalRows}
+            loading={loading}
+          />
+        ) : (
+          <SOGridPagination
+            table={table}
+            pageSizeOptions={options.paginationPageSizeOptions}
+            serverSide={serverSide}
+            totalRows={totalRows}
+            loading={loading}
+          />
+        )
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useMemo, useRef, useState } from "react";
 import { SOGrid, SOGridApi, SOGridRef } from "so-grid-react";
 import { DataTableToolbar } from "./data-table-toolbar";
+import { CustomPagination } from "@/components/CustomPagination";
 
 
 export default function OrderDemo() {
@@ -87,6 +88,8 @@ export default function OrderDemo() {
                     pagination={true}
                     paginationPageSize={10}
                     paginationPageSizeOptions={[10, 20, 50, 100]}
+                    PaginationComponent={CustomPagination}
+                    suppressScrollOnNewData={true}
                     sortable={true}
                     multiSort={true}
                     filterable={true}
