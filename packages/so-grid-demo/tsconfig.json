@@ -16,6 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
+    "types": [
+      "node"
+    ],
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
@@ -27,7 +30,9 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "tests",
+    "playwright.config.ts"
   ],
   "references": [
     {
