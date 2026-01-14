@@ -1,0 +1,22 @@
+{
+  "name": "so-grid-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SO-Grid - A powerful React grid component library based on TanStack Table",
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:core": "pnpm --filter so-grid-core build",
+    "build:react": "pnpm --filter so-grid-react build",
+    "dev": "pnpm --filter so-grid-demo dev",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "clean": "pnpm -r clean"
+  },
+  "keywords": ["grid", "react", "table", "datagrid", "so-grid", "tanstack"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

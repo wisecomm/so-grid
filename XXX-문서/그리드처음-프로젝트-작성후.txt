@@ -1,0 +1,50 @@
+
+#  요청 프람프트
+SO-Grid 프로젝트 만들어주라(TanstackTable 사용함)
+AG-Grid 처럼 react 사용 가능한 그리드 콤포넌트 개발 할려고함
+이름은 SO-Grid 만들고 테스트 할수 있는 프로젝트도 만듬
+
+SO-Grid 프로젝트는 디렉토리, 패키지 구조는 확장성이나 기능상 AG-Grid 처럼 개발 같은 구조로 만들면 좋을것 같음
+
+claude 로 만듬
+
+⏺ SO-Grid 프로젝트가 성공적으로 생성되었습니다.
+
+  프로젝트 구조:
+  so-grid/
+  ├── packages/
+  │   ├── so-grid-core/       # TanStack Table 기반 코어 로직
+  │   │   └── src/
+  │   │       ├── core/       # gridCore, columnMapper
+  │   │       ├── types/      # AG-Grid 스타일 타입 정의
+  │   │       └── utils/      # 유틸리티 함수
+  │   │
+  │   ├── so-grid-react/      # React 컴포넌트
+  │   │   └── src/
+  │   │       ├── components/ # SOGrid, Header, Body, Pagination
+  │   │       ├── hooks/      # useSOGrid, useSOGridTable
+  │   │       └── styles/     # CSS 스타일
+  │   │
+  │   └── so-grid-demo/       # 테스트/데모 앱 (Vite)
+  │
+  ├── package.json            # pnpm workspaces 설정
+  ├── pnpm-workspace.yaml
+  └── tsconfig.base.json
+
+  주요 기능:
+  - AG-Grid 스타일 API (columnDefs, rowData, onGridReady)
+  - 정렬, 필터링, 페이지네이션
+  - 행 선택 (single/multiple)
+  - 커스텀 셀 렌더러
+  - 테마 지원 (default/dark/compact)
+  - CSV 내보내기
+
+  데모 앱 실행 중: http://localhost:3000/
+
+  사용 방법:
+  cd so-grid
+  pnpm dev          # 데모 앱 실행
+  pnpm build        # 전체 빌드
+  pnpm build:core   # 코어만 빌드
+  pnpm build:react  # React만 빌드
+  

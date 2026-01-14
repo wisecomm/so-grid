@@ -1,0 +1,40 @@
+{
+  "name": "so-grid-react",
+  "version": "0.1.0",
+  "description": "React components for SO-Grid",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean && pnpm build:css",
+    "build:css": "cp src/styles/so-grid.css dist/styles.css",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "so-grid-core": "workspace:*",
+    "@tanstack/react-table": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "keywords": ["grid", "react", "table", "so-grid"],
+  "license": "MIT"
+}
