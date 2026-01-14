@@ -125,14 +125,16 @@ export function DateInput({
                     <Button
                         variant={"outline"}
                         className={cn(
-                            "w-[140px] justify-between text-left font-normal",
+                            "w-[160px] justify-between text-left font-normal",
                             !value && "text-muted-foreground",
                             className
                         )}
                         onKeyDown={onKeyDown}
                     >
-                        {dateObj ? format(dateObj, "yyyy-MM-dd") : <span>{placeholder}</span>}
-                        <CalendarIcon className="h-4 w-4 opacity-50" />
+                        <span className="flex-1 truncate text-left">
+                            {dateObj ? format(dateObj, "yyyy-MM-dd") : placeholder}
+                        </span>
+                        <CalendarIcon className="ml-2 h-4 w-4 opacity-50 shrink-0" />
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -153,7 +155,7 @@ export function DateInput({
     return (
         <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
             <PopoverAnchor asChild>
-                <div className={cn("relative w-[150px]", className)}>
+                <div className={cn("relative w-[160px]", className)}>
                     <Input
                         type="text"
                         placeholder={placeholder}
