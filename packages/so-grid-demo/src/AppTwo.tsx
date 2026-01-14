@@ -132,9 +132,6 @@ function ClientSideDemo() {
 
   return (
     <section className="demo-section">
-      <h2>Client-Side Grid</h2>
-      <p className="demo-desc">All data loaded in browser. Sorting, filtering, pagination handled locally.</p>
-
       <div className="controls">
         <input
           type="text"
