@@ -28,6 +28,9 @@ export function SOGridPagination<TData>({
   const { pageIndex, pageSize } = getState().pagination;
   const pageCount = getPageCount();
 
+  console.log('SOGridPagination render:', { pageIndex, pageSize, pageCount, canNext: getCanNextPage() });
+
+
   // 서버 사이드 모드에서는 전달받은 totalRows 사용
   const totalRows = serverSide && serverTotalRows !== undefined
     ? serverTotalRows
@@ -85,7 +88,10 @@ export function SOGridPagination<TData>({
 
           <button
             className="so-grid__pagination-btn"
-            onClick={() => nextPage()}
+            onClick={() => {
+              console.log('Clicked Next Page');
+              nextPage();
+            }}
             disabled={!getCanNextPage()}
             title="Next page"
           >
@@ -93,7 +99,10 @@ export function SOGridPagination<TData>({
           </button>
           <button
             className="so-grid__pagination-btn"
-            onClick={() => setPageIndex(pageCount - 1)}
+            onClick={() => {
+              console.log('Clicked Last Page');
+              setPageIndex(pageCount - 1);
+            }}
             disabled={!getCanNextPage()}
             title="Last page"
           >

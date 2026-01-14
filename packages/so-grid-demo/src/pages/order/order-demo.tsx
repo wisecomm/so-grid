@@ -85,8 +85,8 @@ export default function OrderDemo() {
                     theme={theme}
                     rowSelection="multiple"
                     pagination={true}
-                    paginationPageSize={5}
-                    paginationPageSizeOptions={[5, 10, 20, 50, 100]}
+                    paginationPageSize={10}
+                    paginationPageSizeOptions={[10, 20, 50, 100]}
                     sortable={true}
                     multiSort={true}
                     filterable={true}

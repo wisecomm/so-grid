@@ -1,10 +1,11 @@
-import { useMemo, useRef, useSyncExternalStore, useCallback, useEffect } from 'react';
+import { useMemo, useRef, useSyncExternalStore, useCallback, useEffect, useState } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
   getSortedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  type Table,
 } from '@tanstack/react-table';
 import {
   createSOGrid,
@@ -65,7 +66,7 @@ export function useSOGrid<TData>(
  * TanStack React Table을 직접 사용하는 훅
  */
 export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
-  console.log('useSOGridTable options:', options);
+  // console.log('useSOGridTable options:', options);
   const columns = useMemo(
     () => mapColumnDefs(options.columnDefs, options.defaultColDef),
     [options.columnDefs, options.defaultColDef]
@@ -79,7 +80,17 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     ? Math.ceil(options.totalRows / pageSize)
     : undefined;
 
-  const table = useReactTable({
+  // Controlled pagination state
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize,
+  });
+
+  // Table ref to avoid circular dependency in options
+  const tableRef = useRef<Table<TData>>();
+
+  const tableOptions = useMemo(() => ({
+    debugTable: true,
     data: options.rowData,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -98,47 +109,68 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     manualSorting: isServerSide,
     manualFiltering: isServerSide,
     pageCount: pageCount,
-    initialState: {
-      pagination: {
-        pageSize,
-        pageIndex: 0,
-      },
+    autoResetPageIndex: false,
+    state: {
+      pagination,
     },
-    // 서버 사이드 콜백
-    onPaginationChange: isServerSide ? (updater) => {
-      const oldState = table.getState().pagination;
-      const newState = typeof updater === 'function' ? updater(oldState) : updater;
+    // Pagination change handler
+    onPaginationChange: (updater: any) => {
+      const newPagination = typeof updater === 'function'
+        ? updater(pagination)
+        : updater;
 
-      if (options.onPaginationChange) {
+      setPagination(newPagination);
+
+      if (isServerSide && options.onPaginationChange) {
         options.onPaginationChange({
-          page: newState.pageIndex,
-          pageSize: newState.pageSize,
-          startRow: newState.pageIndex * newState.pageSize,
-          endRow: (newState.pageIndex + 1) * newState.pageSize,
+          page: newPagination.pageIndex,
+          pageSize: newPagination.pageSize,
+          startRow: newPagination.pageIndex * newPagination.pageSize,
+          endRow: (newPagination.pageIndex + 1) * newPagination.pageSize,
         });
       }
-    } : undefined,
-    onSortingChange: isServerSide ? (updater) => {
+    },
+
+    onSortingChange: isServerSide ? (updater: any) => {
+      const table = tableRef.current;
+      if (!table) return;
+
       const oldState = table.getState().sorting;
       const newState = typeof updater === 'function' ? updater(oldState) : updater;
 
       if (options.onSortChange) {
         options.onSortChange(
-          newState.map((s) => ({
+          newState.map((s: any) => ({
             colId: s.id,
             sort: s.desc ? 'desc' as const : 'asc' as const,
           }))
         );
       }
     } : undefined,
-  });
+  }), [
+    options.rowData,
+    columns,
+    isServerSide,
+    options.sortable,
+    options.filterable,
+    options.rowSelection,
+    options.multiSort,
+    pageCount,
+    pagination, // Dependency on local state
+    // options.onPaginationChange/onSortChange are omitted for stability, standard practice when they might be inline functions
+  ]);
 
-  // 페이지 사이즈 변경 감지
+  const table = useReactTable(tableOptions);
+
+  // Update ref
+  tableRef.current = table;
+
+  // 페이지 사이즈 변경 (External prop change)
   useEffect(() => {
     if (pageSize) {
-      table.setPageSize(pageSize);
+      setPagination(prev => ({ ...prev, pageSize }));
     }
-  }, [pageSize, table]);
+  }, [pageSize]);
 
   return table;
 }
