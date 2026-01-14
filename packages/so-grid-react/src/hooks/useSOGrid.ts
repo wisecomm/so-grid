@@ -65,6 +65,7 @@ export function useSOGrid<TData>(
  * TanStack React Table을 직접 사용하는 훅
  */
 export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
+  console.log('useSOGridTable options:', options);
   const columns = useMemo(
     () => mapColumnDefs(options.columnDefs, options.defaultColDef),
     [options.columnDefs, options.defaultColDef]
@@ -131,6 +132,13 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
       }
     } : undefined,
   });
+
+  // 페이지 사이즈 변경 감지
+  useEffect(() => {
+    if (pageSize) {
+      table.setPageSize(pageSize);
+    }
+  }, [pageSize, table]);
 
   return table;
 }

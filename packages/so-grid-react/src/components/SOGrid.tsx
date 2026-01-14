@@ -35,7 +35,7 @@ function SOGridInner<TData>(
     ...options
   } = props;
 
-  const table = useSOGridTable({ ...options, serverSide, totalRows });
+  const table = useSOGridTable({ ...options, serverSide, totalRows, pagination });
   const containerRef = useRef<HTMLDivElement>(null);
   const apiRef = useRef<SOGridApi<TData> | null>(null);
 
@@ -100,9 +100,9 @@ function SOGridInner<TData>(
           sort: col.getIsSorted() || null,
           sortIndex: col.getSortIndex(),
         })),
-      setColumnState: () => {},
-      refreshCells: () => {},
-      sizeColumnsToFit: () => {},
+      setColumnState: () => { },
+      refreshCells: () => { },
+      sizeColumnsToFit: () => { },
       exportDataAsCsv: (params) => {
         const rows = params?.onlySelected
           ? table.getSelectedRowModel().rows.map((r) => r.original)
