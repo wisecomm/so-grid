@@ -108,9 +108,6 @@ importers:
       react-dom:
         specifier: '>=17.0.0'
         version: 18.3.1(react@18.3.1)
-      so-grid-core:
-        specifier: workspace:*
-        version: link:../so-grid-core
     devDependencies:
       '@types/react':
         specifier: ^18.2.0
@@ -118,6 +115,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.0
         version: 18.3.7(@types/react@18.3.27)
+      so-grid-core:
+        specifier: workspace:*
+        version: link:../so-grid-core
       tsup:
         specifier: ^8.0.0
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)

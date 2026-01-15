@@ -1,0 +1,161 @@
+# SO-Grid 외부 프로젝트 사용 가이드
+
+이 문서는 `so-grid` 패키지들을 외부 프로젝트에서 사용하기 위한 방법을 설명합니다.
+
+## 1. 사전 준비 (빌드)
+
+외부에서 사용하기 전에 반드시 패키지를 빌드하여 `dist` 폴더를 생성해야 합니다.
+
+```bash
+# so-grid 루트 디렉토리에서
+pnpm install
+pnpm build
+```
+
+## 2. 사용 방법
+
+상황에 따라 다음 3가지 방법 중 하나를 선택하여 사용하세요.
+
+### 방법 A: NPM 배포 (권장: 운영 환경/협업)
+NPM 공식 저장소나 사내 Private 저장소에 배포하여 사용합니다.
+
+1. **배포하기**
+   ```bash
+   # 1. so-grid-core 배포
+   cd packages/so-grid-core
+   pnpm publish
+
+   # 2. so-grid-react 배포
+   cd ../so-grid-react
+   pnpm publish
+   ```
+
+2. **외부 프로젝트에서 설치**
+   ```bash
+   npm install so-grid-react
+   # 또는
+   pnpm add so-grid-react
+   # 또는
+   yarn add so-grid-react
+   ```
+
+---
+
+### 방법 B: 로컬 링크 (개발 환경)
+`so-grid`를 개발하면서 동시에 외부 프로젝트에서 실시간으로 테스트하고 싶을 때 유용합니다.
+
+1. **링크 등록 (Link Source)**
+   ```bash
+   # 1. Core 링크 등록
+   cd packages/so-grid-core
+   pnpm link --global
+
+   # 2. React 링크 등록
+   cd ../so-grid-react
+   pnpm link --global
+   ```
+
+2. **외부 프로젝트에서 링크 연결 (Link Target)**
+   ```bash
+   # 외부 프로젝트의 루트 경로에서 실행
+   pnpm link --global so-grid-core so-grid-react
+   ```
+
+> **참고**: 링크를 해제하려면 외부 프로젝트에서 `pnpm unlink --global so-grid-core so-grid-react`를 실행하세요.
+
+> [!WARNING]
+> **주의: 다른 개발자와 협업 시**
+> `pnpm link`는 **본인의 컴퓨터 내부에서만** 작동합니다. 즉, 내 컴퓨터의 `so-grid` 폴더를 내 컴퓨터의 다른 프로젝트와 연결하는 것입니다.
+> 다른 개발자가 사용하게 하려면 **방법 A(NPM 배포)** 또는 **Git URL 설치** 등을 사용해야 합니다.
+
+---
+
+### 방법 C: 파일로 설치 (.tgz 패키징) - **팀원과 공유 가능**
+NPM 저장소 없이 파일(`tgz`)을 만들어 Git에 함께 올려서 공유하는 방법입니다.
+**주의:** `so-grid-react`는 `so-grid-core`를 **Peer Dependency**로 가지고 있으므로, 반드시 **두 패키지를 함께 설치**해야 합니다.
+
+1. **패키징 (Packing)** - *빌드 후 패키징해야 최신 코드가 반영됩니다.*
+   ```bash
+   # 1. Core 빌드 및 패키징
+   cd packages/so-grid-core
+   pnpm build      # 중요: 먼저 빌드해야 dist 폴더가 생성됩니다
+   pnpm pack
+   # -> so-grid-core-0.1.0.tgz 생성
+
+   # 2. React 빌드 및 패키징
+   cd ../so-grid-react
+   pnpm build      # 중요: 먼저 빌드해야 dist 폴더가 생성됩니다
+   pnpm pack
+   # -> so-grid-react-0.1.0.tgz 생성
+   ```
+
+2. **파일 이동 및 설치 (최초 1회)**
+   두 파일을 외부 프로젝트의 `libs` 폴더로 복사하고 **동시에** 설치합니다.
+   ```bash
+   # 외부 프로젝트에서
+   mkdir libs
+   cp /path/to/so-grid-core-0.1.0.tgz ./libs/
+   cp /path/to/so-grid-react-0.1.0.tgz ./libs/
+   
+   # 두 패키지를 함께 설치해야 의존성이 올바르게 연결됩니다
+   npm install ./libs/so-grid-core-0.1.0.tgz ./libs/so-grid-react-0.1.0.tgz
+   ```
+
+   **결과**: `package.json`에 두 패키지가 모두 파일 경로로 잡힙니다.
+   ```json
+   "dependencies": {
+     "so-grid-core": "file:libs/so-grid-core-0.1.0.tgz",
+     "so-grid-react": "file:libs/so-grid-react-0.1.0.tgz"
+   }
+   ```
+
+3. **Git 공유 및 다른 개발자 사용**
+   *   `libs` 폴더(파일 2개)와 `package.json`을 Git에 커밋합니다.
+   *   다른 개발자는 `npm install`만 실행하면 됩니다.
+
+---
+
+## 3. 코드 적용 예시
+
+설치가 완료되면 다음과 같이 컴포넌트와 스타일을 불러와 사용합니다.
+
+### 스타일시트 Import (필수)
+`App.tsx` 또는 `main.tsx`의 최상단에 스타일 파일을 import 해주세요.
+
+```tsx
+import 'so-grid-react/dist/styles.css'; // 또는 'so-grid-react/styles.css' (package.json exports 설정에 따라 다름)
+```
+
+### 컴포넌트 사용
+
+```tsx
+import { SOGrid } from 'so-grid-react';
+import type { SOColumnDef } from 'so-grid-react';
+
+interface User {
+  id: number;
+  name: string;
+}
+
+const columnDefs: SOColumnDef<User>[] = [
+  { field: 'id', headerName: 'ID', width: 80 },
+  { field: 'name', headerName: 'Name', width: 200 },
+];
+
+const rowData = [
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' },
+];
+
+function MyGrid() {
+  return (
+    <div style={{ height: '500px', width: '100%' }}>
+      <SOGrid
+        rowData={rowData}
+        columnDefs={columnDefs}
+        pagination={true}
+      />
+    </div>
+  );
+}
+```
