@@ -239,6 +239,8 @@ function SOGridInner<TData>(
             onRowClicked={onRowClicked}
             onRowDoubleClicked={onRowDoubleClicked}
             onCellClicked={onCellClicked}
+            onCellValueChanged={options.onCellValueChanged}
+            api={apiRef.current}
           />
         </table>
       </div>

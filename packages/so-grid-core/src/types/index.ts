@@ -55,6 +55,7 @@ export interface SOGridOptions<TData> {
   onRowClicked?: (event: RowClickedEvent<TData>) => void;
   onRowDoubleClicked?: (event: RowClickedEvent<TData>) => void;
   onCellClicked?: (event: CellClickedEvent<TData>) => void;
+  onCellValueChanged?: (event: CellValueChangedEvent<TData>) => void;
   onGridReady?: (api: SOGridApi<TData>) => void;
 
   // 가상화
@@ -91,6 +92,7 @@ export interface SOColumnDef<TData> {
   // 편집
   editable?: boolean;
   cellEditor?: CellEditor<TData>;
+  cellEditorParams?: any;
 
   // 스타일
   cellClass?: string | ((params: CellClassParams<TData>) => string);
@@ -107,7 +109,7 @@ export type CellRenderer<TData> = (params: CellRendererParams<TData>) => any;
 export type HeaderRenderer<TData> = (params: HeaderRendererParams<TData>) => any;
 export type ValueFormatter<TData> = (params: ValueFormatterParams<TData>) => string;
 export type ValueGetter<TData> = (params: ValueGetterParams<TData>) => any;
-export type CellEditor<TData> = (params: CellEditorParams<TData>) => any;
+export type CellEditor<TData> = string | ((params: CellEditorParams<TData>) => any);
 
 // 파라미터 타입
 export interface CellRendererParams<TData> {
@@ -141,6 +143,7 @@ export interface CellEditorParams<TData> {
   colDef: SOColumnDef<TData>;
   onValueChange: (newValue: any) => void;
   stopEditing: () => void;
+  api: SOGridApi<TData>;
 }
 
 export interface CellClassParams<TData> {
@@ -163,6 +166,15 @@ export interface CellClickedEvent<TData> {
   rowIndex: number;
   colDef: SOColumnDef<TData>;
   event: MouseEvent;
+}
+
+export interface CellValueChangedEvent<TData> {
+  value: any;
+  oldValue: any;
+  data: TData;
+  rowIndex: number;
+  colDef: SOColumnDef<TData>;
+  api: SOGridApi<TData>;
 }
 
 // 정렬 모델

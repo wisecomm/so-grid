@@ -1,6 +1,6 @@
 import { ALL_DATA, Person, useColumnDefs } from "@/data";
-import { useMemo, useRef, useState } from "react";
-import { SOGrid, SOGridApi, SOGridRef } from "so-grid-react";
+import { useRef, useState } from "react";
+import { SOGrid, SOGridApi, SOGridRef, CellValueChangedEvent } from "so-grid-react";
 
 export default function ClientSideDemo() {
     const [theme, setTheme] = useState<'default' | 'dark' | 'compact'>('default');
@@ -9,8 +9,18 @@ export default function ClientSideDemo() {
     const gridRef = useRef<SOGridRef<Person>>(null);
     const apiRef = useRef<SOGridApi<Person> | null>(null);
 
-    const rowData = useMemo(() => ALL_DATA.slice(0, 100), []);
+    const [rowData, setRowData] = useState(() => ALL_DATA.slice(0, 100));
     const columnDefs = useColumnDefs();
+
+    const handleCellValueChanged = (event: CellValueChangedEvent<Person>) => {
+        console.log('Cell Value Changed:', event);
+        const newData = rowData.map(item =>
+            item.id === event.data.id
+                ? { ...item, [event.colDef.field as string]: event.value }
+                : item
+        );
+        setRowData(newData);
+    };
 
     const handleGridReady = (api: SOGridApi<Person>) => {
         apiRef.current = api;
@@ -67,6 +77,7 @@ export default function ClientSideDemo() {
                     headerHeight={48}
                     onGridReady={handleGridReady}
                     onSelectionChanged={(rows) => setSelectedCount(rows.length)}
+                    onCellValueChanged={handleCellValueChanged}
                     defaultColDef={{ resizable: true, sortable: true }}
                 />
             </div>

@@ -15,12 +15,14 @@ export interface Person {
     salary: number;
     startDate: string;
     status: 'active' | 'inactive' | 'pending';
+    style: string;
 }
 
 // 전체 데이터 생성
 export function generateAllData(count: number): Person[] {
     const departments = ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance'];
     const statuses: Person['status'][] = ['active', 'inactive', 'pending'];
+    const styles = ['Modern', 'Classic', 'Minimal', 'Bold'];
 
     return Array.from({ length: count }, (_, i) => ({
         id: i + 1,
@@ -37,6 +39,7 @@ export function generateAllData(count: number): Person[] {
             .toISOString()
             .split('T')[0],
         status: statuses[Math.floor(Math.random() * statuses.length)],
+        style: styles[Math.floor(Math.random() * styles.length)],
     }));
 }
 
@@ -59,6 +62,7 @@ export function fetchServerData(params: {
                 data.sort((a, b) => {
                     const aVal = a[colId as keyof Person];
                     const bVal = b[colId as keyof Person];
+                    if (aVal === undefined || bVal === undefined) return 0;
                     if (aVal < bVal) return sort === 'asc' ? -1 : 1;
                     if (aVal > bVal) return sort === 'asc' ? 1 : -1;
                     return 0;
@@ -75,6 +79,23 @@ export function fetchServerData(params: {
         }, 500); // 500ms 딜레이로 서버 응답 시뮬레이션
     });
 }
+
+const convertStyle = (params: any) => {
+    const colors: Record<string, string> = {
+        Modern: '#3f51b5',
+        Classic: '#795548',
+        Minimal: '#607d8b',
+        Bold: '#e91e63',
+    };
+    return params.value;
+    /*
+        return (
+            <span style={{ fontWeight: 'bold', color: colors[params.value] }}>
+                {params.value} Style
+            </span>
+        );
+    */
+};
 
 // 공통 컬럼 정의
 export function useColumnDefs(): SOColumnDef<Person>[] {
@@ -101,6 +122,18 @@ export function useColumnDefs(): SOColumnDef<Person>[] {
                 valueFormatter: CommonGrid.formatNumber,
             },
             { field: 'startDate', headerName: 'Start Date', width: 120 },
+            {
+                field: 'style',
+                headerName: 'Style',
+                width: 120,
+                cellRenderer: convertStyle,
+                cellStyle: { textAlign: 'center' },
+                editable: true,
+                cellEditor: 'soSelectCellEditor',
+                cellEditorParams: {
+                    values: ['Modern', 'Classic', 'Minimal', 'Bold'],
+                },
+            },
             {
                 field: 'status',
                 headerName: 'Status',

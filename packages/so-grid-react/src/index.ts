@@ -43,6 +43,7 @@ export type {
   CellClassParams,
   RowClickedEvent,
   CellClickedEvent,
+  CellValueChangedEvent,
   // Server-side types
   PaginationChangeParams,
   FilterModel,
