@@ -125,6 +125,11 @@ function BodyRow<TData>({
   const isSelected = row.getIsSelected();
 
   const handleRowClick = (event: MouseEvent<HTMLTableRowElement>) => {
+    // Row Selection
+    if (row.getCanSelect()) {
+      row.toggleSelected();
+    }
+
     onRowClicked?.({
       data: row.original,
       rowIndex,
@@ -194,7 +199,6 @@ function BodyCell<TData>({
   const value = cell.getValue();
 
   const handleClick = (event: MouseEvent<HTMLTableCellElement>) => {
-    event.stopPropagation();
     onCellClicked?.({
       value,
       data: row.original,
@@ -338,8 +342,25 @@ function BodyCell<TData>({
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
     >
-      <div className="so-grid__cell-content" style={cellStyle?.textAlign ? { textAlign: cellStyle.textAlign as any } : undefined}>
-        {renderContent()}
+      <div className="so-grid__cell-content" style={{
+        ...(cellStyle?.textAlign ? { textAlign: cellStyle.textAlign as any } : {}),
+        ...(meta?.checkboxSelection ? { justifyContent: 'center', display: 'flex' } : {})
+      }}>
+        {meta?.checkboxSelection ? (
+          <input
+            type="checkbox"
+            className="so-grid__checkbox"
+            checked={row.getIsSelected()}
+            onChange={(e) => {
+              e.stopPropagation();
+              row.toggleSelected(e.target.checked);
+            }}
+            onClick={(e) => e.stopPropagation()}
+            style={{ verticalAlign: 'middle', cursor: 'pointer' }}
+          />
+        ) : (
+          renderContent()
+        )}
       </div>
     </td>
   );

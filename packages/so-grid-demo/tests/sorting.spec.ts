@@ -19,7 +19,6 @@ test.describe('SO-Grid Demo - Sorting', () => {
     test('should sort by Name column when header is clicked', async ({ page }) => {
         // Get initial first row data
         const firstRowName = page.locator('.so-grid__table tbody tr').first().locator('td').nth(1);
-        const initialName = await firstRowName.textContent();
 
         // Click Name header to sort
         const nameHeader = page.locator('.so-grid__table thead th', { hasText: 'Name' });
@@ -34,7 +33,6 @@ test.describe('SO-Grid Demo - Sorting', () => {
     test('should sort by Age column when header is clicked', async ({ page }) => {
         // Get initial first row age
         const firstRowAge = page.locator('.so-grid__table tbody tr').first().locator('td').nth(3);
-        const initialAge = await firstRowAge.textContent();
 
         // Click Age header to sort
         const ageHeader = page.locator('.so-grid__table thead th', { hasText: 'Age' });
@@ -42,7 +40,6 @@ test.describe('SO-Grid Demo - Sorting', () => {
         await page.waitForTimeout(300);
 
         // After sorting, first row age might be different
-        const newAge = await firstRowAge.textContent();
 
         // Verify grid is still working after sort
         await expect(firstRowAge).toBeVisible();
@@ -55,15 +52,9 @@ test.describe('SO-Grid Demo - Sorting', () => {
         await nameHeader.click();
         await page.waitForTimeout(300);
 
-        // Get first row name after first sort
-        const firstRowAfterAsc = await page.locator('.so-grid__table tbody tr').first().locator('td').nth(1).textContent();
-
         // Second click - descending
         await nameHeader.click();
         await page.waitForTimeout(300);
-
-        // Get first row name after second sort
-        const firstRowAfterDesc = await page.locator('.so-grid__table tbody tr').first().locator('td').nth(1).textContent();
 
         // Data should be different after toggle (unless all values are same)
         // Just verify no error occurred
@@ -105,7 +96,6 @@ test.describe('SO-Grid Demo - Sorting', () => {
     test('should sort Age column numerically', async ({ page }) => {
         // Get initial first row age
         const firstRowAge = page.locator('.so-grid__table tbody tr').first().locator('td').nth(3);
-        const initialAge = await firstRowAge.textContent();
 
         // Click Age header to sort ascending
         const ageHeader = page.locator('.so-grid__table thead th', { hasText: 'Age' });

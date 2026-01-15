@@ -35,7 +35,7 @@ interface HeaderCellProps<TData> {
   table: Table<TData>;
 }
 
-function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
+function HeaderCell<TData>({ header, table }: HeaderCellProps<TData>) {
   const meta = header.column.columnDef.meta as any;
   const canSort = header.column.getCanSort();
   const sorted = header.column.getIsSorted();
@@ -76,16 +76,34 @@ function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
         <div
           className={`so-grid__header-cell-content ${canSort ? 'so-grid__header-cell-content--sortable' : ''
             }`}
-          style={headerStyle?.textAlign ? { justifyContent: headerStyle.textAlign === 'right' ? 'flex-end' : headerStyle.textAlign === 'center' ? 'center' : 'flex-start' } : undefined}
+          style={{
+            ...(headerStyle?.textAlign ? { justifyContent: headerStyle.textAlign === 'right' ? 'flex-end' : headerStyle.textAlign === 'center' ? 'center' : 'flex-start' } : {}),
+            ...(meta?.checkboxSelection ? { justifyContent: 'center' } : {})
+          }}
           onClick={handleClick}
         >
+          {meta?.checkboxSelection && table.options.enableMultiRowSelection && (
+            <input
+              type="checkbox"
+              className="so-grid__checkbox"
+              style={{ verticalAlign: 'middle', cursor: 'pointer' }}
+              checked={table.getIsAllRowsSelected()}
+              ref={(input) => {
+                if (input) {
+                  input.indeterminate = table.getIsSomeRowsSelected();
+                }
+              }}
+              onChange={table.getToggleAllRowsSelectedHandler()}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
           {meta?.headerRenderer ? (
             meta.headerRenderer({
               colDef: meta.soColDef,
               api: null,
             })
           ) : (
-            flexRender(header.column.columnDef.header, header.getContext())
+            (meta?.checkboxSelection && table.options.enableMultiRowSelection) ? null : flexRender(header.column.columnDef.header, header.getContext())
           )}
           {canSort && <span className="so-grid__sort-icon">{getSortIcon()}</span>}
         </div>

@@ -81,12 +81,6 @@ export function fetchServerData(params: {
 }
 
 const convertStyle = (params: any) => {
-    const colors: Record<string, string> = {
-        Modern: '#3f51b5',
-        Classic: '#795548',
-        Minimal: '#607d8b',
-        Bold: '#e91e63',
-    };
     return params.value;
     /*
         return (
@@ -101,16 +95,22 @@ const convertStyle = (params: any) => {
 export function useColumnDefs(): SOColumnDef<Person>[] {
     return useMemo(
         () => [
-            { field: 'id', headerName: 'ID', width: 80, pinned: 'left' },
+            {
+                field: 'id',
+                headerName: '',
+                maxWidth: 70,
+                pinned: 'left',
+                checkboxSelection: true,
+            },
             { field: 'name', headerName: 'Name', width: 150, sortable: true },
             { field: 'email', headerName: 'Email', width: 220 },
             {
                 field: 'age',
-                headerName: 'Age',
+                headerName: '나이',
                 width: 80,
                 sortable: true,
-                cellStyle: { textAlign: 'right', 'background-color': '#f1f7ff' },
-                headerStyle: { textAlign: 'right' },
+                headerStyle: { backgroundColor: '#f1f7ff' },
+                cellStyle: { textAlign: 'right', backgroundColor: '#f1f7ff' },
             },
             { field: 'department', headerName: 'Department', width: 140 },
             {
@@ -118,7 +118,7 @@ export function useColumnDefs(): SOColumnDef<Person>[] {
                 headerName: 'Salary',
                 width: 120,
                 cellStyle: { textAlign: 'right' },
-                headerStyle: { textAlign: 'right', 'background-color': '#f1f7ff' },
+                headerStyle: { textAlign: 'right', backgroundColor: '#f1f7ff' },
                 valueFormatter: CommonGrid.formatNumber,
             },
             { field: 'startDate', headerName: 'Start Date', width: 120 },

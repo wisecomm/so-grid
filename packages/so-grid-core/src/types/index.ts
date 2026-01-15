@@ -94,6 +94,9 @@ export interface SOColumnDef<TData> {
   cellEditor?: CellEditor<TData>;
   cellEditorParams?: any;
 
+  // 체크박스 선택
+  checkboxSelection?: boolean;
+
   // 스타일
   cellClass?: string | ((params: CellClassParams<TData>) => string);
   cellStyle?: Record<string, any> | ((params: CellClassParams<TData>) => Record<string, any>);

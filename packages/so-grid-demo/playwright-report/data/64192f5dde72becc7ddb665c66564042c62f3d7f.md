@@ -1,0 +1,291 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - heading "SO-Grid Demo" [level=1] [ref=e6]
+      - paragraph [ref=e7]: TanStack Table Based
+    - generic [ref=e8]:
+      - button "Order Demo" [ref=e9]
+      - button "Client-Side Grid" [ref=e10]
+      - button "Server-Side Grid" [ref=e11]
+  - main [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]: 고객명
+            - textbox "고객명 입력" [ref=e20]
+          - generic [ref=e21]:
+            - generic [ref=e22]: 주문일
+            - generic [ref=e23]:
+              - textbox "YYYY-MM-DD" [ref=e24]
+              - button [ref=e25] [cursor=pointer]:
+                - img [ref=e26]
+            - generic [ref=e28]: "-"
+            - button "YYYY-MM-DD" [ref=e29]:
+              - generic [ref=e30]: YYYY-MM-DD
+              - img [ref=e31]
+          - button "조회" [ref=e33]:
+            - img [ref=e34]
+            - text: 조회
+        - generic [ref=e37]:
+          - button "추가" [ref=e38]:
+            - img [ref=e39]
+            - text: 추가
+          - button "수정" [ref=e40]:
+            - img [ref=e41]
+            - text: 수정
+          - button "삭제" [ref=e44]:
+            - img [ref=e45]
+            - text: 삭제
+      - generic [ref=e49]:
+        - table [ref=e51]:
+          - rowgroup [ref=e52]:
+            - row "ID Name ⇅ Email Age ⇅ Department Salary Start Date Style Status" [ref=e53]:
+              - columnheader "ID" [ref=e54]:
+                - generic [ref=e55]: ID
+              - columnheader "Name ⇅" [ref=e57]:
+                - generic [ref=e58] [cursor=pointer]:
+                  - text: Name
+                  - generic [ref=e59]: ⇅
+              - columnheader "Email" [ref=e61]:
+                - generic [ref=e62]: Email
+              - columnheader "Age ⇅" [ref=e64]:
+                - generic [ref=e65] [cursor=pointer]:
+                  - text: Age
+                  - generic [ref=e66]: ⇅
+              - columnheader "Department" [ref=e68]:
+                - generic [ref=e69]: Department
+              - columnheader "Salary" [ref=e71]:
+                - generic [ref=e72]: Salary
+              - columnheader "Start Date" [ref=e74]:
+                - generic [ref=e75]: Start Date
+              - columnheader "Style" [ref=e77]:
+                - generic [ref=e78]: Style
+              - columnheader "Status" [ref=e80]:
+                - generic [ref=e81]: Status
+          - rowgroup [ref=e83]:
+            - row "1 Person 1 person1@example.com 1035 HR 39,512 2021-05-14 Minimal inactive" [ref=e84]:
+              - cell "1" [ref=e85]:
+                - generic [ref=e86]: "1"
+              - cell "Person 1" [ref=e87]:
+                - generic [ref=e88]: Person 1
+              - cell "person1@example.com" [ref=e89]:
+                - generic [ref=e90]: person1@example.com
+              - cell "1035" [ref=e91]:
+                - generic [ref=e92]: "1035"
+              - cell "HR" [ref=e93]:
+                - generic [ref=e94]: HR
+              - cell "39,512" [ref=e95]:
+                - generic [ref=e96]: 39,512
+              - cell "2021-05-14" [ref=e97]:
+                - generic [ref=e98]: 2021-05-14
+              - cell "Minimal" [ref=e99]:
+                - generic [ref=e100]: Minimal
+              - cell "inactive" [ref=e101]:
+                - generic [ref=e103]: inactive
+            - row "2 Person 2 person2@example.com 1052 Marketing 63,149 2020-11-10 Classic active" [ref=e104]:
+              - cell "2" [ref=e105]:
+                - generic [ref=e106]: "2"
+              - cell "Person 2" [ref=e107]:
+                - generic [ref=e108]: Person 2
+              - cell "person2@example.com" [ref=e109]:
+                - generic [ref=e110]: person2@example.com
+              - cell "1052" [ref=e111]:
+                - generic [ref=e112]: "1052"
+              - cell "Marketing" [ref=e113]:
+                - generic [ref=e114]: Marketing
+              - cell "63,149" [ref=e115]:
+                - generic [ref=e116]: 63,149
+              - cell "2020-11-10" [ref=e117]:
+                - generic [ref=e118]: 2020-11-10
+              - cell "Classic" [ref=e119]:
+                - generic [ref=e120]: Classic
+              - cell "active" [ref=e121]:
+                - generic [ref=e123]: active
+            - row "3 Person 3 person3@example.com 1032 Engineering 101,027 2022-12-15 Classic inactive" [ref=e124]:
+              - cell "3" [ref=e125]:
+                - generic [ref=e126]: "3"
+              - cell "Person 3" [ref=e127]:
+                - generic [ref=e128]: Person 3
+              - cell "person3@example.com" [ref=e129]:
+                - generic [ref=e130]: person3@example.com
+              - cell "1032" [ref=e131]:
+                - generic [ref=e132]: "1032"
+              - cell "Engineering" [ref=e133]:
+                - generic [ref=e134]: Engineering
+              - cell "101,027" [ref=e135]:
+                - generic [ref=e136]: 101,027
+              - cell "2022-12-15" [ref=e137]:
+                - generic [ref=e138]: 2022-12-15
+              - cell "Classic" [ref=e139]:
+                - generic [ref=e140]: Classic
+              - cell "inactive" [ref=e141]:
+                - generic [ref=e143]: inactive
+            - row "4 Person 4 person4@example.com 1053 Finance 95,590 2023-02-25 Modern pending" [ref=e144]:
+              - cell "4" [ref=e145]:
+                - generic [ref=e146]: "4"
+              - cell "Person 4" [ref=e147]:
+                - generic [ref=e148]: Person 4
+              - cell "person4@example.com" [ref=e149]:
+                - generic [ref=e150]: person4@example.com
+              - cell "1053" [ref=e151]:
+                - generic [ref=e152]: "1053"
+              - cell "Finance" [ref=e153]:
+                - generic [ref=e154]: Finance
+              - cell "95,590" [ref=e155]:
+                - generic [ref=e156]: 95,590
+              - cell "2023-02-25" [ref=e157]:
+                - generic [ref=e158]: 2023-02-25
+              - cell "Modern" [ref=e159]:
+                - generic [ref=e160]: Modern
+              - cell "pending" [ref=e161]:
+                - generic [ref=e163]: pending
+            - row "5 Person 5 person5@example.com 1047 HR 106,062 2021-03-19 Bold inactive" [ref=e164]:
+              - cell "5" [ref=e165]:
+                - generic [ref=e166]: "5"
+              - cell "Person 5" [ref=e167]:
+                - generic [ref=e168]: Person 5
+              - cell "person5@example.com" [ref=e169]:
+                - generic [ref=e170]: person5@example.com
+              - cell "1047" [ref=e171]:
+                - generic [ref=e172]: "1047"
+              - cell "HR" [ref=e173]:
+                - generic [ref=e174]: HR
+              - cell "106,062" [ref=e175]:
+                - generic [ref=e176]: 106,062
+              - cell "2021-03-19" [ref=e177]:
+                - generic [ref=e178]: 2021-03-19
+              - cell "Bold" [ref=e179]:
+                - generic [ref=e180]: Bold
+              - cell "inactive" [ref=e181]:
+                - generic [ref=e183]: inactive
+            - row "6 Person 6 person6@example.com 1030 HR 88,528 2021-06-27 Bold inactive" [ref=e184]:
+              - cell "6" [ref=e185]:
+                - generic [ref=e186]: "6"
+              - cell "Person 6" [ref=e187]:
+                - generic [ref=e188]: Person 6
+              - cell "person6@example.com" [ref=e189]:
+                - generic [ref=e190]: person6@example.com
+              - cell "1030" [ref=e191]:
+                - generic [ref=e192]: "1030"
+              - cell "HR" [ref=e193]:
+                - generic [ref=e194]: HR
+              - cell "88,528" [ref=e195]:
+                - generic [ref=e196]: 88,528
+              - cell "2021-06-27" [ref=e197]:
+                - generic [ref=e198]: 2021-06-27
+              - cell "Bold" [ref=e199]:
+                - generic [ref=e200]: Bold
+              - cell "inactive" [ref=e201]:
+                - generic [ref=e203]: inactive
+            - row "7 Person 7 person7@example.com 1053 Engineering 79,305 2020-06-02 Classic active" [ref=e204]:
+              - cell "7" [ref=e205]:
+                - generic [ref=e206]: "7"
+              - cell "Person 7" [ref=e207]:
+                - generic [ref=e208]: Person 7
+              - cell "person7@example.com" [ref=e209]:
+                - generic [ref=e210]: person7@example.com
+              - cell "1053" [ref=e211]:
+                - generic [ref=e212]: "1053"
+              - cell "Engineering" [ref=e213]:
+                - generic [ref=e214]: Engineering
+              - cell "79,305" [ref=e215]:
+                - generic [ref=e216]: 79,305
+              - cell "2020-06-02" [ref=e217]:
+                - generic [ref=e218]: 2020-06-02
+              - cell "Classic" [ref=e219]:
+                - generic [ref=e220]: Classic
+              - cell "active" [ref=e221]:
+                - generic [ref=e223]: active
+            - row "8 Person 8 person8@example.com 1039 HR 94,386 2023-01-25 Minimal inactive" [ref=e224]:
+              - cell "8" [ref=e225]:
+                - generic [ref=e226]: "8"
+              - cell "Person 8" [ref=e227]:
+                - generic [ref=e228]: Person 8
+              - cell "person8@example.com" [ref=e229]:
+                - generic [ref=e230]: person8@example.com
+              - cell "1039" [ref=e231]:
+                - generic [ref=e232]: "1039"
+              - cell "HR" [ref=e233]:
+                - generic [ref=e234]: HR
+              - cell "94,386" [ref=e235]:
+                - generic [ref=e236]: 94,386
+              - cell "2023-01-25" [ref=e237]:
+                - generic [ref=e238]: 2023-01-25
+              - cell "Minimal" [ref=e239]:
+                - generic [ref=e240]: Minimal
+              - cell "inactive" [ref=e241]:
+                - generic [ref=e243]: inactive
+            - row "9 Person 9 person9@example.com 1032 HR 40,543 2022-09-10 Bold pending" [ref=e244]:
+              - cell "9" [ref=e245]:
+                - generic [ref=e246]: "9"
+              - cell "Person 9" [ref=e247]:
+                - generic [ref=e248]: Person 9
+              - cell "person9@example.com" [ref=e249]:
+                - generic [ref=e250]: person9@example.com
+              - cell "1032" [ref=e251]:
+                - generic [ref=e252]: "1032"
+              - cell "HR" [ref=e253]:
+                - generic [ref=e254]: HR
+              - cell "40,543" [ref=e255]:
+                - generic [ref=e256]: 40,543
+              - cell "2022-09-10" [ref=e257]:
+                - generic [ref=e258]: 2022-09-10
+              - cell "Bold" [ref=e259]:
+                - generic [ref=e260]: Bold
+              - cell "pending" [ref=e261]:
+                - generic [ref=e263]: pending
+            - row "10 Person 10 person10@example.com 1025 HR 83,381 2023-11-03 Bold pending" [ref=e264]:
+              - cell "10" [ref=e265]:
+                - generic [ref=e266]: "10"
+              - cell "Person 10" [ref=e267]:
+                - generic [ref=e268]: Person 10
+              - cell "person10@example.com" [ref=e269]:
+                - generic [ref=e270]: person10@example.com
+              - cell "1025" [ref=e271]:
+                - generic [ref=e272]: "1025"
+              - cell "HR" [ref=e273]:
+                - generic [ref=e274]: HR
+              - cell "83,381" [ref=e275]:
+                - generic [ref=e276]: 83,381
+              - cell "2023-11-03" [ref=e277]:
+                - generic [ref=e278]: 2023-11-03
+              - cell "Bold" [ref=e279]:
+                - generic [ref=e280]: Bold
+              - cell "pending" [ref=e281]:
+                - generic [ref=e283]: pending
+        - generic [ref=e284]:
+          - generic [ref=e285]:
+            - strong [ref=e286]: "1"
+            - text: ~
+            - strong [ref=e287]: "10"
+            - text: /
+            - strong [ref=e288]: "100"
+            - text: 건
+          - generic [ref=e289]:
+            - button "⏮" [disabled] [ref=e290]
+            - button "◀ 이전" [disabled] [ref=e291]
+            - generic [ref=e292]:
+              - spinbutton [ref=e293]: "1"
+              - generic [ref=e294]:
+                - text: /
+                - strong [ref=e295]: "10"
+                - text: 페이지
+            - button "다음 ▶" [ref=e296] [cursor=pointer]
+            - button "⏭" [ref=e297] [cursor=pointer]
+          - generic [ref=e298]:
+            - generic [ref=e299]: 페이지당
+            - combobox [ref=e300] [cursor=pointer]:
+              - option "10건" [selected]
+              - option "20건"
+              - option "50건"
+              - option "100건"
+      - generic [ref=e301]:
+        - strong [ref=e302]: "Selected:"
+        - text: 0 |
+        - strong [ref=e303]: "Total:"
+        - text: "100"
+```

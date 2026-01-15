@@ -34,6 +34,11 @@ export default function OrderDemo() {
             toast({ title: "No Selection", description: "Please select a row to edit", variant: "destructive" });
             return;
         }
+
+        // 선택된 행의 데이터를 가져와서 콘솔로그로 출력
+        const selectedData = selected[0];
+        console.log("Selected Data:", selectedData);
+
         toast({ title: "Edit Clicked", description: `Editing ${selected.length} items` });
     };
 
@@ -84,7 +89,8 @@ export default function OrderDemo() {
                     rowData={rowData}
                     columnDefs={columnDefs}
                     theme={theme}
-                    rowSelection="multiple"
+                    rowSelection="single"
+                    // rowSelection="multiple"
                     pagination={true}
                     paginationPageSize={10}
                     paginationPageSizeOptions={[10, 20, 50, 100]}

@@ -44,8 +44,6 @@ test.describe('SO-Grid Demo - Order Demo Toolbar', () => {
         await page.waitForTimeout(1000);
 
         // Toast should appear with search related message
-        const toast = page.locator('[role="alert"]').or(page.locator('[data-sonner-toast]'));
-        const toastExists = await toast.count() > 0;
 
         // Search might show toast or not depending on implementation
         // Just verify no error occurred

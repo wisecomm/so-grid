@@ -23,7 +23,7 @@ function mapSingleColumn<TData>(
   if (mergedCol.children && mergedCol.children.length > 0) {
     return {
       id: colId,
-      header: mergedCol.headerName || colId,
+      header: mergedCol.checkboxSelection ? (mergedCol.headerName ?? '') : (mergedCol.headerName || colId),
       columns: mapColumnDefs(mergedCol.children, defaultColDef),
     };
   }
@@ -32,7 +32,7 @@ function mapSingleColumn<TData>(
   if (mergedCol.valueGetter) {
     return {
       id: colId,
-      header: mergedCol.headerName || String(mergedCol.field) || colId,
+      header: mergedCol.checkboxSelection ? (mergedCol.headerName ?? '') : (mergedCol.headerName || String(mergedCol.field || '') || colId),
       accessorFn: (row: TData) => {
         return mergedCol.valueGetter!({
           data: row,
@@ -59,6 +59,7 @@ function mapSingleColumn<TData>(
         cellEditorParams: mergedCol.cellEditorParams,
         cellStyle: mergedCol.cellStyle,
         headerStyle: mergedCol.headerStyle,
+        checkboxSelection: mergedCol.checkboxSelection,
       },
     };
   }
@@ -66,7 +67,7 @@ function mapSingleColumn<TData>(
   if (mergedCol.field) {
     return {
       id: colId,
-      header: mergedCol.headerName || String(mergedCol.field) || colId,
+      header: mergedCol.checkboxSelection ? (mergedCol.headerName ?? '') : (mergedCol.headerName || String(mergedCol.field || '') || colId),
       accessorKey: mergedCol.field as string,
       enableSorting: mergedCol.sortable === true,
       enableColumnFilter: mergedCol.filterable !== false,
@@ -88,6 +89,7 @@ function mapSingleColumn<TData>(
         cellEditorParams: mergedCol.cellEditorParams,
         cellStyle: mergedCol.cellStyle,
         headerStyle: mergedCol.headerStyle,
+        checkboxSelection: mergedCol.checkboxSelection,
       },
     };
   }
@@ -95,7 +97,7 @@ function mapSingleColumn<TData>(
   // 기본 display 컬럼
   return {
     id: colId,
-    header: mergedCol.headerName || colId,
+    header: mergedCol.headerName ?? String(mergedCol.field) ?? colId,
     enableSorting: mergedCol.sortable === true,
     enableColumnFilter: mergedCol.filterable !== false,
     enableResizing: mergedCol.resizable !== false,

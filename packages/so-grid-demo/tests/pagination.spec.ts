@@ -37,9 +37,6 @@ test.describe('SO-Grid Demo - Pagination', () => {
         const firstRow = page.locator('.so-grid__table tbody tr').first();
         await expect(firstRow).toBeVisible();
 
-        const initialText = await firstRow.textContent();
-
-        // Look for next page button (could be various selectors)
         const nextButton = page.locator('button').filter({ hasText: /next|다음|→|>/ }).first()
             .or(page.locator('[aria-label*="next"]').first());
 
@@ -47,8 +44,6 @@ test.describe('SO-Grid Demo - Pagination', () => {
             await nextButton.click();
             await page.waitForTimeout(500);
 
-            // Content might have changed
-            const newText = await firstRow.textContent();
             // Just verify no error occurred
             expect(true).toBeTruthy();
         }
@@ -58,8 +53,6 @@ test.describe('SO-Grid Demo - Pagination', () => {
         const pageSizeSelect = page.locator('select').first();
 
         if (await pageSizeSelect.isVisible()) {
-            // Get initial row count
-            const initialRowCount = await page.locator('.so-grid__table tbody tr').count();
 
             // Get available options
             const options = await pageSizeSelect.locator('option').all();

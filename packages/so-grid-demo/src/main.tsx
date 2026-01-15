@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import 'so-grid-react/styles.css';
 import { ToastProvider } from './hooks/use-toast';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
