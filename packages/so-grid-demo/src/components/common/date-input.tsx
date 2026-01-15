@@ -125,7 +125,7 @@ export function DateInput({
                     <Button
                         variant={"outline"}
                         className={cn(
-                            "w-[160px] justify-between text-left font-normal",
+                            "w-[140px] justify-between text-left font-normal px-2",
                             !value && "text-muted-foreground",
                             className
                         )}
@@ -155,7 +155,7 @@ export function DateInput({
     return (
         <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
             <PopoverAnchor asChild>
-                <div className={cn("relative w-[160px]", className)}>
+                <div className={cn("relative w-[140px]", className)}>
                     <Input
                         type="text"
                         placeholder={placeholder}
@@ -163,15 +163,15 @@ export function DateInput({
                         onChange={(e) => handleChange(e.target.value)}
                         onBlur={handleBlur}
                         onKeyDown={onKeyDown}
-                        className="pr-8 w-full"
+                        className="pl-2 pr-8 w-full"
                         aria-invalid={isError}
                     />
                     <PopoverTrigger asChild>
                         <button
-                            className="absolute right-0 top-0 h-9 w-9 flex items-center justify-center bg-transparent border-0 p-0 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                            className="absolute right-0 top-0 h-full w-8 flex items-center justify-center bg-transparent border-0 p-0 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                             type="button"
                         >
-                            <CalendarIcon className="h-4 w-4" />
+                            <CalendarIcon className="h-4 w-4 opacity-50" />
                         </button>
                     </PopoverTrigger>
                 </div>
