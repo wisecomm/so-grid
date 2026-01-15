@@ -56,6 +56,8 @@ function mapSingleColumn<TData>(
         headerClass: mergedCol.headerClass,
         editable: mergedCol.editable,
         cellEditor: mergedCol.cellEditor,
+        cellStyle: mergedCol.cellStyle,
+        headerStyle: mergedCol.headerStyle,
       },
     };
   }
@@ -82,6 +84,8 @@ function mapSingleColumn<TData>(
         headerClass: mergedCol.headerClass,
         editable: mergedCol.editable,
         cellEditor: mergedCol.cellEditor,
+        cellStyle: mergedCol.cellStyle,
+        headerStyle: mergedCol.headerStyle,
       },
     };
   }
@@ -107,6 +111,8 @@ function mapSingleColumn<TData>(
       headerClass: mergedCol.headerClass,
       editable: mergedCol.editable,
       cellEditor: mergedCol.cellEditor,
+      cellStyle: mergedCol.cellStyle,
+      headerStyle: mergedCol.headerStyle,
     },
   };
 }

@@ -94,7 +94,9 @@ export interface SOColumnDef<TData> {
 
   // 스타일
   cellClass?: string | ((params: CellClassParams<TData>) => string);
+  cellStyle?: Record<string, any> | ((params: CellClassParams<TData>) => Record<string, any>);
   headerClass?: string;
+  headerStyle?: Record<string, any>;
 
   // 그룹
   children?: SOColumnDef<TData>[];

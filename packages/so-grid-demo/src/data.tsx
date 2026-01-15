@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { CommonGrid } from './utils/common-grid';
 import {
     type SortModel,
     type SOColumnDef,
@@ -25,7 +26,7 @@ export function generateAllData(count: number): Person[] {
         id: i + 1,
         name: `Person ${i + 1}`,
         email: `person${i + 1}@example.com`,
-        age: 20 + Math.floor(Math.random() * 40),
+        age: 1020 + Math.floor(Math.random() * 40),
         department: departments[Math.floor(Math.random() * departments.length)],
         salary: 30000 + Math.floor(Math.random() * 100000),
         startDate: new Date(
@@ -82,18 +83,22 @@ export function useColumnDefs(): SOColumnDef<Person>[] {
             { field: 'id', headerName: 'ID', width: 80, pinned: 'left' },
             { field: 'name', headerName: 'Name', width: 150, sortable: true },
             { field: 'email', headerName: 'Email', width: 220 },
-            { field: 'age', headerName: 'Age', width: 80, sortable: true },
+            {
+                field: 'age',
+                headerName: 'Age',
+                width: 80,
+                sortable: true,
+                cellStyle: { textAlign: 'right' },
+                headerStyle: { textAlign: 'right' },
+            },
             { field: 'department', headerName: 'Department', width: 140 },
             {
                 field: 'salary',
                 headerName: 'Salary',
                 width: 120,
-                valueFormatter: ({ value }) =>
-                    new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                        minimumFractionDigits: 0,
-                    }).format(value),
+                cellStyle: { textAlign: 'right' },
+                headerStyle: { textAlign: 'right' },
+                valueFormatter: CommonGrid.formatNumber,
             },
             { field: 'startDate', headerName: 'Start Date', width: 120 },
             {

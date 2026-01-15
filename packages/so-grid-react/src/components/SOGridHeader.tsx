@@ -55,11 +55,14 @@ function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
     return null;
   };
 
+  const headerStyle = meta?.headerStyle || {};
+
   return (
     <th
       className={`so-grid__header-cell ${isPinned ? `so-grid__header-cell--pinned-${isPinned}` : ''
         } ${meta?.headerClass || ''}`}
       style={{
+        ...headerStyle,
         width: header.getSize(),
         minWidth: header.column.columnDef.minSize,
         maxWidth: header.column.columnDef.maxSize,
@@ -73,6 +76,7 @@ function HeaderCell<TData>({ header }: HeaderCellProps<TData>) {
         <div
           className={`so-grid__header-cell-content ${canSort ? 'so-grid__header-cell-content--sortable' : ''
             }`}
+          style={headerStyle?.textAlign ? { justifyContent: headerStyle.textAlign === 'right' ? 'flex-end' : headerStyle.textAlign === 'center' ? 'center' : 'flex-start' } : undefined}
           onClick={handleClick}
         >
           {meta?.headerRenderer ? (

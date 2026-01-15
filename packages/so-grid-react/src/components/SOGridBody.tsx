@@ -105,9 +105,8 @@ function BodyRow<TData>({
 
   return (
     <tr
-      className={`so-grid__row ${isSelected ? 'so-grid__row--selected' : ''} ${
-        rowIndex % 2 === 0 ? 'so-grid__row--even' : 'so-grid__row--odd'
-      }`}
+      className={`so-grid__row ${isSelected ? 'so-grid__row--selected' : ''} ${rowIndex % 2 === 0 ? 'so-grid__row--even' : 'so-grid__row--odd'
+        }`}
       style={{ height: rowHeight }}
       onClick={handleRowClick}
       onDoubleClick={handleRowDoubleClick}
@@ -182,13 +181,39 @@ function BodyCell<TData>({
         api: null,
       });
     }
+
+    if (meta?.valueFormatter) {
+      return meta.valueFormatter({
+        value,
+        data: row.original,
+        rowIndex,
+        colDef: meta.soColDef,
+      });
+    }
+
     return flexRender(cell.column.columnDef.cell, cell.getContext());
   };
+
+  // 셀 스타일 계산
+  let cellStyle: React.CSSProperties = {};
+  if (meta?.cellStyle) {
+    if (typeof meta.cellStyle === 'function') {
+      cellStyle = meta.cellStyle({
+        value,
+        data: row.original,
+        rowIndex,
+        colDef: meta.soColDef,
+      });
+    } else {
+      cellStyle = meta.cellStyle;
+    }
+  }
 
   return (
     <td
       className={cellClass}
       style={{
+        ...cellStyle,
         width: cell.column.getSize(),
         minWidth: cell.column.columnDef.minSize,
         maxWidth: cell.column.columnDef.maxSize,
@@ -198,7 +223,9 @@ function BodyCell<TData>({
       }}
       onClick={handleClick}
     >
-      <div className="so-grid__cell-content">{renderContent()}</div>
+      <div className="so-grid__cell-content" style={cellStyle?.textAlign ? { textAlign: cellStyle.textAlign as any } : undefined}>
+        {renderContent()}
+      </div>
     </td>
   );
 }
