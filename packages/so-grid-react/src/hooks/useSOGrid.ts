@@ -166,6 +166,13 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
 
   const table = useReactTable(tableOptions);
 
+  // Server-side 모드일 때 데이터가 변경되면 선택 초기화
+  useEffect(() => {
+    if (isServerSide) {
+      table.resetRowSelection();
+    }
+  }, [options.rowData, isServerSide, table]);
+
   // Update ref
   tableRef.current = table;
 

@@ -7,7 +7,13 @@
   # 외부 프로젝트에서 설치
   npm install so-grid-react
 
-  2. 로컬 링크로 사용 (개발 중)
+  2. 로컬 파일(.tgz)로 설치 (팀 공유용)
+
+  # libs 폴더에 있는 tgz 파일로 설치
+  npm install ./path/to/libs/so-grid-core-0.1.0.tgz
+  npm install ./path/to/libs/so-grid-react-0.1.0.tgz
+
+  3. 로컬 링크로 사용 (개발 중)
 
   # so-grid 패키지들 링크 등록
   cd so-grid/packages/so-grid-core && pnpm link --global
@@ -17,7 +23,9 @@
   cd your-project
   pnpm link --global so-grid-core so-grid-react
 
-  3. 외부 프로젝트 사용 예시
+  pnpm link --global so-grid-core so-grid-react
+
+  4. 외부 프로젝트 사용 예시
 
   // App.tsx
   import { SOGrid, type SOColumnDef } from 'so-grid-react';
@@ -57,7 +65,7 @@
     );
   }
 
-  4. 필요한 peer dependencies
+  5. 필요한 peer dependencies
 
   {
     "dependencies": {
