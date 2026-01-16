@@ -118,7 +118,9 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     manualSorting: isServerSide,
     manualFiltering: isServerSide,
     pageCount: pageCount,
-    autoResetPageIndex: false,
+    // 기본값 true: 데이터 변경/정렬/필터링 시 자동으로 1페이지로 리셋됨
+    autoResetPageIndex: options.autoResetPageIndex ?? true,
+    autoResetRowSelection: false, // 데이터 변경 시에만 초기화하기 위해 자동 초기화 비활성화
     state: {
       pagination,
       sorting,
@@ -166,12 +168,10 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
 
   const table = useReactTable(tableOptions);
 
-  // Server-side 모드일 때 데이터가 변경되면 선택 초기화
+  // 데이터(rowData)가 변경되면 선택 초기화 (서버사이드/클라이언트사이드 모두 적용)
   useEffect(() => {
-    if (isServerSide) {
-      table.resetRowSelection();
-    }
-  }, [options.rowData, isServerSide, table]);
+    table.resetRowSelection();
+  }, [options.rowData, table]);
 
   // Update ref
   tableRef.current = table;

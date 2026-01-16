@@ -41,6 +41,8 @@ export interface SOGridOptions<TData> {
   suppressScrollOnNewData?: boolean;
   /** 컨테이너 높이에 맞춰 페이지 크기 자동 계산 (AG-Grid: paginationAutoPageSize) */
   paginationAutoPageSize?: boolean;
+  /** 데이터 변경, 필터링, 정렬 시 페이지를 자동으로 1페이지로 리셋할지 여부 (Default: true) */
+  autoResetPageIndex?: boolean;
 
   // 서버 사이드 모드
   serverSide?: boolean;
