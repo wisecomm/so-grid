@@ -121,7 +121,12 @@ export function useColumnDefs(): SOColumnDef<Person>[] {
                 headerStyle: { textAlign: 'right', backgroundColor: '#f1f7ff' },
                 valueFormatter: CommonGrid.formatNumber,
             },
-            { field: 'startDate', headerName: 'Start Date', width: 120 },
+            {
+                field: 'startDate',
+                headerName: 'Start Date',
+                width: 120,
+                valueFormatter: CommonGrid.formatDate,
+            },
             {
                 field: 'style',
                 headerName: 'Style',
