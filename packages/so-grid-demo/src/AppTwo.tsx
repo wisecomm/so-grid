@@ -5,7 +5,7 @@ import {
   type SOColumnDef,
   type SOGridApi,
   type SortModel,
-  type PaginationChangeParams,
+  type PaginationState,
 } from 'so-grid-react';
 import 'so-grid-react/styles.css';
 
@@ -223,10 +223,10 @@ function ServerSideDemo() {
 
   // 페이지 변경 핸들러
   const handlePaginationChange = useCallback(
-    (params: PaginationChangeParams) => {
-      setCurrentPage(params.page);
+    (params: PaginationState) => {
+      setCurrentPage(params.pageIndex);
       setPageSize(params.pageSize);
-      loadData(params.page, params.pageSize, sortModel);
+      loadData(params.pageIndex, params.pageSize, sortModel);
     },
     [loadData, sortModel]
   );

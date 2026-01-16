@@ -6,6 +6,14 @@ import type {
   VisibilityState,
 } from '@tanstack/table-core';
 
+export type {
+  SortingState,
+  RowSelectionState,
+  PaginationState,
+  ColumnPinningState,
+  VisibilityState,
+};
+
 // Grid Options - AG-Grid 스타일 API
 export interface SOGridOptions<TData> {
   // 데이터
@@ -38,7 +46,7 @@ export interface SOGridOptions<TData> {
   serverSide?: boolean;
   totalRows?: number;
   loading?: boolean;
-  onPaginationChange?: (params: PaginationChangeParams) => void;
+  onPaginationChange?: (params: PaginationState) => void;
   onSortChange?: (sortModel: SortModel[]) => void;
   onFilterChange?: (filterModel: FilterModel) => void;
 
@@ -186,13 +194,7 @@ export interface SortModel {
   sort: 'asc' | 'desc';
 }
 
-// 서버 사이드 페이지네이션 파라미터
-export interface PaginationChangeParams {
-  page: number;
-  pageSize: number;
-  startRow: number;
-  endRow: number;
-}
+
 
 // 필터 모델
 export interface FilterModel {

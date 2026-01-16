@@ -218,7 +218,7 @@ export class SOGridCore<TData> {
         this.notifyListeners();
       },
       getSortModel: () =>
-        this.state.sorting.map((s) => ({
+        this.state.sorting.map((s: { id: string; desc: boolean }) => ({
           colId: s.id,
           sort: s.desc ? 'desc' : 'asc',
         })),
@@ -257,8 +257,8 @@ export class SOGridCore<TData> {
         this.notifyListeners();
       },
       setColumnPinned: (colId: string, pinned: 'left' | 'right' | false) => {
-        const left = this.state.columnPinning.left?.filter((id) => id !== colId) || [];
-        const right = this.state.columnPinning.right?.filter((id) => id !== colId) || [];
+        const left = this.state.columnPinning.left?.filter((id: string) => id !== colId) || [];
+        const right = this.state.columnPinning.right?.filter((id: string) => id !== colId) || [];
 
         if (pinned === 'left') {
           left.push(colId);

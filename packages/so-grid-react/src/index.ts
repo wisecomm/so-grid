@@ -45,7 +45,7 @@ export type {
   CellClickedEvent,
   CellValueChangedEvent,
   // Server-side types
-  PaginationChangeParams,
+  PaginationState,
   FilterModel,
   FilterCondition,
   ServerSideRequest,

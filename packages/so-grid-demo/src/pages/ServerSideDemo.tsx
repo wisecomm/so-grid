@@ -1,7 +1,7 @@
 import { fetchServerData, Person } from "@/data";
 import React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { PaginationChangeParams, SOColumnDef, SOGrid, SortModel } from "so-grid-react";
+import { PaginationState, SOColumnDef, SOGrid, SortModel } from "so-grid-react";
 
 export default function ServerSideDemo() {
     const [rowData, setRowData] = useState<Person[]>([]);
@@ -39,10 +39,10 @@ export default function ServerSideDemo() {
 
     // 페이지 변경 핸들러
     const handlePaginationChange = useCallback(
-        (params: PaginationChangeParams) => {
-            setCurrentPage(params.page);
+        (params: PaginationState) => {
+            setCurrentPage(params.pageIndex);
             setPageSize(params.pageSize);
-            loadData(params.page, params.pageSize, sortModel);
+            loadData(params.pageIndex, params.pageSize, sortModel);
         },
         [loadData, sortModel]
     );

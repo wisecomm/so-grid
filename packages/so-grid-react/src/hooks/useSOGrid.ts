@@ -132,12 +132,7 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
       setPagination(newPagination);
 
       if (isServerSide && options.onPaginationChange) {
-        options.onPaginationChange({
-          page: newPagination.pageIndex,
-          pageSize: newPagination.pageSize,
-          startRow: newPagination.pageIndex * newPagination.pageSize,
-          endRow: (newPagination.pageIndex + 1) * newPagination.pageSize,
-        });
+        options.onPaginationChange(newPagination);
       }
     },
 
