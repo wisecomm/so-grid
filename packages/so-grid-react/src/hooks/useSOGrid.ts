@@ -118,9 +118,10 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     manualSorting: isServerSide,
     manualFiltering: isServerSide,
     pageCount: pageCount,
-    // 기본값 true: 데이터 변경/정렬/필터링 시 자동으로 1페이지로 리셋됨
-    autoResetPageIndex: options.autoResetPageIndex ?? true,
-    autoResetRowSelection: false, // 데이터 변경 시에만 초기화하기 위해 자동 초기화 비활성화
+    // 기본값 true: 데이터 변경/정렬/필터링 시 자동으로 1페이지로 리셋됨. 
+    // 단, 서버사이드 모드일 때는 데이터가 바뀌어도 페이지를 유지해야 하므로 기본값을 false로 설정
+    autoResetPageIndex: options.autoResetPageIndex ?? !isServerSide,
+    autoResetRowSelection: !isServerSide,
     state: {
       pagination,
       sorting,
