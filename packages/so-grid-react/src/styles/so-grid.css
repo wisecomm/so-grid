@@ -1,15 +1,18 @@
 /* SO-Grid Base Styles */
 .so-grid {
-  --so-grid-border-color: #e0e0e0;
-  --so-grid-header-bg: #f5f5f5;
-  --so-grid-header-text: #333;
-  --so-grid-row-bg: #fff;
-  --so-grid-row-alt-bg: #fafafa;
-  --so-grid-row-hover-bg: #f0f0f0;
-  --so-grid-row-selected-bg: #e3f2fd;
-  --so-grid-cell-text: #333;
-  --so-grid-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  --so-grid-font-size: 14px;
+  /* Colors based on Ag-Grid Alpine Theme */
+  --so-grid-border-color: #babfc7;
+  --so-grid-header-bg: #f8f8f8;
+  --so-grid-header-text: #545454;
+  --so-grid-row-bg: #ffffff;
+  --so-grid-row-alt-bg: #ffffff; /* Alpine default is flat, but can be #fcfcfc if striped */
+  --so-grid-row-hover-bg: #ecf0f1;
+  --so-grid-row-selected-bg: #b0e0e6; /* Alpine Blue Selection */
+  --so-grid-cell-text: #181d1f;
+  
+  /* Fonts & Sizing */
+  --so-grid-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --so-grid-font-size: 13px; /* Slightly more compact than 14px */
 
   font-family: var(--so-grid-font-family);
   font-size: var(--so-grid-font-size);
