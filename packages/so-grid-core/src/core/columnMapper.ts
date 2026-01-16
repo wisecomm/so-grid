@@ -17,6 +17,11 @@ function mapSingleColumn<TData>(
 ): ColumnDef<TData, unknown> {
   const mergedCol = { ...defaultColDef, ...soCol };
 
+  // checkboxSelection일 경우 기본 maxWidth 30 설정
+  if (mergedCol.checkboxSelection && mergedCol.maxWidth === undefined) {
+    mergedCol.maxWidth = 30;
+  }
+
   const colId = mergedCol.colId || String(mergedCol.field) || '';
 
   // 그룹 컬럼 처리
