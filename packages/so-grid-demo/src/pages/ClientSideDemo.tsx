@@ -79,6 +79,7 @@ export default function ClientSideDemo() {
                     onSelectionChanged={(rows) => setSelectedCount(rows.length)}
                     onCellValueChanged={handleCellValueChanged}
                     defaultColDef={{ resizable: true, sortable: true }}
+                    pageIndex={1}
                 />
             </div>
 

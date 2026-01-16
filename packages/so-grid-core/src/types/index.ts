@@ -43,6 +43,8 @@ export interface SOGridOptions<TData> {
   paginationAutoPageSize?: boolean;
   /** 데이터 변경, 필터링, 정렬 시 페이지를 자동으로 1페이지로 리셋할지 여부 (Default: true) */
   autoResetPageIndex?: boolean;
+  /** 현재 페이지 인덱스 (0-based) - 제어 컴포넌트용 */
+  pageIndex?: number;
 
   // 서버 사이드 모드
   serverSide?: boolean;

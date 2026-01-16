@@ -86,10 +86,15 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
     : undefined;
 
   // Controlled pagination state
-  const [pagination, setPagination] = useState({
+  const [paginationState, setPaginationState] = useState({
     pageIndex: 0,
     pageSize,
   });
+
+  const pagination = useMemo(() => ({
+    pageIndex: options.pageIndex ?? paginationState.pageIndex,
+    pageSize: paginationState.pageSize,
+  }), [options.pageIndex, paginationState.pageIndex, paginationState.pageSize]);
 
   // Controlled sorting state
   const [sorting, setSorting] = useState<any[]>([]);
@@ -132,9 +137,9 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
         ? updater(pagination)
         : updater;
 
-      setPagination(newPagination);
+      setPaginationState(newPagination);
 
-      if (isServerSide && options.onPaginationChange) {
+      if (options.onPaginationChange) {
         options.onPaginationChange(newPagination);
       }
     },
@@ -180,7 +185,7 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
   // 페이지 사이즈 변경 (External prop change)
   useEffect(() => {
     if (pageSize) {
-      setPagination(prev => ({ ...prev, pageSize }));
+      setPaginationState(prev => ({ ...prev, pageSize }));
     }
   }, [pageSize]);
 
