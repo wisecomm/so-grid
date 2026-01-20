@@ -182,10 +182,30 @@ export function useSOGridTable<TData>(options: SOGridOptions<TData>) {
   // Update ref
   tableRef.current = table;
 
+  // Create a ref for options to access latest callbacks in effects without dependency issues
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
+
   // 페이지 사이즈 변경 (External prop change)
   useEffect(() => {
-    if (pageSize) {
-      setPaginationState(prev => ({ ...prev, pageSize }));
+    if (pageSize && pageSize !== paginationState.pageSize) {
+      const oldPageSize = paginationState.pageSize;
+      const oldPageIndex = paginationState.pageIndex;
+
+      // Calculate new page index to maintain position
+      const firstRowIndex = oldPageIndex * oldPageSize;
+      const newPageIndex = Math.floor(firstRowIndex / pageSize);
+
+      const newPagination = {
+        pageIndex: newPageIndex,
+        pageSize: pageSize,
+      };
+
+      setPaginationState(newPagination);
+
+      if (optionsRef.current.onPaginationChange) {
+        optionsRef.current.onPaginationChange(newPagination);
+      }
     }
   }, [pageSize]);
 

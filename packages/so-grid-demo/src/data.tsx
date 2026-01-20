@@ -15,6 +15,7 @@ export interface Person {
     salary: number;
     startDate: string;
     status: 'active' | 'inactive' | 'pending';
+    isVerified: 0 | 1;
     style: string;
 }
 
@@ -39,6 +40,7 @@ export function generateAllData(count: number): Person[] {
             .toISOString()
             .split('T')[0],
         status: statuses[Math.floor(Math.random() * statuses.length)],
+        isVerified: Math.random() > 0.5 ? 1 : 0,
         style: styles[Math.floor(Math.random() * styles.length)],
     }));
 }
@@ -165,6 +167,13 @@ export function useColumnDefs(): SOColumnDef<Person>[] {
                         </span>
                     );
                 },
+            },
+            {
+                field: 'isVerified',
+                headerName: 'Verified',
+                width: 90,
+                cellStyle: { textAlign: 'center' },
+                valueFormatter: ({ value }) => (value === 1 ? 'Y' : 'N'),
             },
         ],
         []

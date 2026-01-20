@@ -2,6 +2,7 @@ import { fetchServerData, Person } from "@/data";
 import React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { PaginationState, SOColumnDef, SOGrid, SortModel } from "so-grid-react";
+import { CustomPagination } from "./CustomPagination";
 
 export default function ServerSideDemo() {
     const [rowData, setRowData] = useState<Person[]>([]);
@@ -82,8 +83,10 @@ export default function ServerSideDemo() {
                     totalRows={totalRows}
                     loading={loading}
                     pagination={true}
-                    paginationPageSize={pageSize}
-                    paginationPageSizeOptions={[10, 20, 50, 100]}
+                    //                    paginationPageSize={pageSize}
+                    //                    paginationPageSizeOptions={[10, 20, 50, 100]}
+                    PaginationComponent={CustomPagination}
+
                     sortable={true}
                     rowHeight={44}
                     headerHeight={48}
