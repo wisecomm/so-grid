@@ -32,6 +32,17 @@ export default function ClientSideDemo() {
         apiRef.current?.setQuickFilter(value);
     };
 
+    // Row Click Handler
+    const handleRowClicked = (event: any) => {
+        console.log('Row Clicked:', event.data);
+        alert(`Row Clicked! Name: ${event.data.name}, Status: ${event.data.status}`);
+    };
+
+    // Cell Click Handler
+    const handleCellClicked = (event: any) => {
+        console.log('Cell Clicked:', event.value, event.data);
+    };
+
     return (
         <section className="demo-section">
             <div className="controls">
@@ -78,6 +89,8 @@ export default function ClientSideDemo() {
                     onGridReady={handleGridReady}
                     onSelectionChanged={(rows) => setSelectedCount(rows.length)}
                     onCellValueChanged={handleCellValueChanged}
+                    onRowClicked={handleRowClicked}
+                    onCellClicked={handleCellClicked}
                     defaultColDef={{ resizable: true, sortable: true }}
                     pageIndex={1}
                 />
